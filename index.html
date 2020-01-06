@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Carson Schulz">
+
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css" integrity="sha256-KcCcakqMaamBrTFaxb9tkrP2iq1X8vUnsm86W8pRcgI=" crossorigin="anonymous" />
+<!-- Theme -->
+<link rel="stylesheet" href="css/theme.css">
+<!-- Site Styles -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="weather-main-cont d-flex flex-wrap">
+        <div class="container-custom align-items-start text-right py-4">
+            <ul class="nav justify-content-end weather-main-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="material-icons">info</i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex" href="#"><i class="material-icons mr-3">my_location</i> <span id="displayLocation">Orlando, FL</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="container-custom align-self-end py-5">
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-9 col-xl-6 offset-lg-3 offset-xl-6 weather-cond d-flex flex-wrap align-items-center justify-content-center justify-content-lg-end">
+                    <i class="wi wi-night-sleet weather-icon mr-5"></i>
+                    <span id="displayTemp">62&deg;F</span i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="js/geolocation.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+body, html {
+    background-color: black;
+    overflow-x: hidden;
+}
+/* Utilities */
+.container-custom {
+    width: 93vw;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto; 
+}
+/* Main Site */
+.weather-main-nav a {
+    color: #ffffffcc;
+}
+.weather-main-nav a:hover {
+    color: #ffffff;
+}
+.weather-main-cont {
+    height: 100vh;
+    color: #ffffffcc;
+}
+.weather-cond {
+    font-family: 'Helvetica Neue Thin';
+    font-size: 10rem;
+    font-weight: 100;
+}
+.weather-icon {
+    font-size: 10rem;
+}
+/* Fonts */
+@font-face {
+    font-family: 'Helvetica Neue Thin';
+    src: url('fonts/HelveticaNeue-Thin.woff2') format('woff2'), url('fonts/HelveticaNeue-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
