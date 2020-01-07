@@ -22,21 +22,50 @@
                     <a class="nav-link" href="#"><i class="material-icons">info</i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex" href="#"><i class="material-icons mr-3">my_location</i> <span id="displayLocation">Orlando, FL</span></a>
+                    <a class="nav-link d-flex" href="#" data-toggle="modal" data-target="#exampleModal"><i class="material-icons mr-3">my_location</i> <span id="displayLocation">Orlando, FL</span></a>
                 </li>
             </ul>
         </div>
         <div class="container-custom align-self-end py-5">
             <div class="row align-items-center">
                 <div class="col-12 col-lg-9 col-xl-6 offset-lg-3 offset-xl-6 weather-cond d-flex flex-wrap align-items-center justify-content-center justify-content-lg-end">
-                    <i class="wi wi-night-sleet weather-icon mr-5"></i>
-                    <span id="displayTemp">62&deg;F</span i>
+                    <i class="wi weather-icon mr-5" id="weatherIcon"></i>
+                    <span id="displayTemp">62</span>&deg;F
                 </div>
             </div>
         </div>
     </div>
-
+    <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Location Settings</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h2 id="locationStatus"></h2>
+                    <span class="text-danger" id="locationError"></span>
+                    <div id="locationSuccess">
+                        <p>We used the built-in browser GPS to determine your location. For your protection, this information is <b>never</b> shared or saved. Here are some details:</p>
+                        <ul>
+                            <li><b>Latitude: </b><span id="locationLat"></span></li>
+                            <li><b>Longitude: </b><span id="locationLon"></span></li>
+                            <li><b>City: </b><span id="locationCity"></span></li>
+                            <li><b>State/Country: </b><span id="locationState"></span></li>
+                        </ul>                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="js/geolocation.js"></script>
 </body>
 </html>
