@@ -5,6 +5,9 @@ $(document).ready(function() {
     setTimeout(function(){
         var lat = parseFloat(document.getElementById('locationLat').innerHTML);
         var lon = parseFloat(document.getElementById('locationLon').innerHTML);
+        //  Uncomment below to set a manual lat/lon
+        // lat = 47.6036;
+        // lon = -122.3294;
         //  Check to see if they exist, if not fill with a default. Orlando in this case.
         if(lat === "" || lon === ""){
             lat = 28;
@@ -38,7 +41,7 @@ $(document).ready(function() {
 
                     //  Display icons
                     tod = nightOrDay(data.sunrise, data.sunset);
-                    weatherIconClass = weatherIcon('800', tod);
+                    weatherIconClass = weatherIcon(data.icon, tod);
 
                     var weatherIconHTML = document.getElementById("weatherIcon");
                     weatherIconHTML.classList.add(weatherIconClass);
