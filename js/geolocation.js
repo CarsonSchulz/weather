@@ -1,13 +1,14 @@
 $(document).ready(function() {
     //  Start by grabbing the GPS location
     tryGPS();
+
     //  Check to see if there is any values for the lat and long
     setTimeout(function(){
         var lat = parseFloat(document.getElementById('locationLat').innerHTML);
         var lon = parseFloat(document.getElementById('locationLon').innerHTML);
         //  Uncomment below to set a manual lat/lon
-        // lat = 47.6036;
-        // lon = -122.3294;
+        lat = 47.6036;
+        lon = -122.3294;
         //  Check to see if they exist, if not fill with a default. Orlando in this case.
         if(lat === "" || lon === ""){
             lat = 28;
@@ -64,6 +65,8 @@ function tryGPS() {
     } else {
         printError('Browser cannot support GPS location.')
     }
+
+    return 0;
 }
 function printLatLon(position) {
     document.getElementById('locationLat').innerHTML = position.coords.latitude;

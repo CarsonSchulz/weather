@@ -1,6 +1,6 @@
 body, html {
-    background-color: black;
     overflow-x: hidden;
+    height: 100%;
 }
 /* Utilities */
 .container-custom {
@@ -11,23 +11,40 @@ body, html {
     margin-left: auto; 
 }
 /* Main Site */
-.weather-main-nav a {
-    color: #ffffffcc;
-}
-.weather-main-nav a:hover {
-    color: #ffffff;
-}
-.weather-main-cont {
+.header-main {
+    position: relative;
+    background-color: #000;
     height: 100vh;
-    color: #ffffffcc;
+    width: 100%;
+    overflow: hidden;
 }
-.weather-cond {
-    font-family: 'Helvetica Neue Thin';
-    font-size: 10rem;
-    font-weight: 100;
+.header-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
 }
-.weather-icon {
-    font-size: 10rem;
+.header-cont {
+    position: relative;
+    z-index: 100;
+}
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.3;
+    background-color: black;
+    z-index: 1;
 }
 /* Fonts */
 @font-face {
