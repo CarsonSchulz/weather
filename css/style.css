@@ -46,6 +46,21 @@ body, html {
     background-color: black;
     z-index: 1;
 }
+.weather-text-cont {
+    color: #fff;
+    font-family: 'Helvetica Neue Thin';
+    font-size: 15rem;
+}
+.weather-nav-main {
+    font-family: 'Helvetica Neue Thin';
+    color: #fff;
+}
+.weather-nav-main a {
+    color: #fff;
+}
+.weather-nav-main a:hover {
+    color: #ffffffd5;
+}
 /* Fonts */
 @font-face {
     font-family: 'Helvetica Neue Thin';
