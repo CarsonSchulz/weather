@@ -25,9 +25,6 @@ $(document).ready(function($) {
             printError('There was an issue locating the given coordinates.');
         }
 
-
-
-
     }, 1000);
 
     //  Refresh every 5 mins
@@ -78,19 +75,22 @@ function getWeather(funLat, funLon) {
 }
 
 function tryGPS(callback) {
-
+    
     if (navigator.geolocation) {
         var lat_lng = navigator.geolocation.getCurrentPosition(function(position){
-          var user_position = {};
-          user_position.lat = position.coords.latitude; 
-          user_position.lng = position.coords.longitude; 
-          callback(user_position);
-        });
+            var user_position = {};
+            user_position.lat = position.coords.latitude; 
+            user_position.lng = position.coords.longitude; 
+            callback(user_position);
+        }, gpsBad);
     } else {
+        console.log('shit');
         printError('Browser cannot support GPS location.');
+        badLoc();
     }
 }
 function printLatLon(position) {
+
 
     document.getElementById('locationLat').innerHTML = position.coords.latitude;
     document.getElementById('locationLon').innerHTML = position.coords.longitude;
@@ -99,6 +99,7 @@ function printLatLon(position) {
 }
 function gpsBad(error) {
     printError(error.message);
+    $('#alertModal').modal('show');
 }
 function printError(message) {
     document.getElementById('locationError').innerHTML += message + '<br>';
