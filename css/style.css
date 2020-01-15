@@ -1,6 +1,7 @@
 body, html {
     overflow-x: hidden;
     height: 100%;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 /* Utilities */
 .container-custom {
@@ -9,6 +10,22 @@ body, html {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto; 
+}
+.button {
+    background: transparent;
+    border: 3px solid #212121;
+    color: #212121;
+    text-transform: uppercase;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    padding: 0.7rem 2rem;
+    -moz-transition: color 200ms ease-in-out, background-color 200ms ease-in-out;
+    -webkit-transition: color 200ms ease-in-out, background-color 200ms ease-in-out;
+    transition: color 200ms ease-in-out, background-color 200ms ease-in-out;
+}
+.button:hover {
+    background-color: #212121;
+    color: rgba(255, 255, 255, 0.80);
 }
 /* Main Site */
 .header-main {
@@ -49,17 +66,29 @@ body, html {
 .weather-text-cont {
     color: #fff;
     font-family: 'Helvetica Neue Thin';
-    font-size: 15rem;
 }
 .weather-nav-main {
     font-family: 'Helvetica Neue Thin';
     color: #fff;
 }
 .weather-nav-main a {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.50);
+    -moz-transition: color 200ms ease-in-out;
+    -webkit-transition: color 200ms ease-in-out;
+    transition: color 200ms ease-in-out;
 }
 .weather-nav-main a:hover {
-    color: #ffffffd5;
+    color: #fff;
+}
+.weather-nav-main .active {
+    color: #fff;
+}
+.weather-input {
+    background: transparent;
+    border: 3px solid #212121;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    padding: 0.7rem 2rem;
+    width: 100%;
 }
 /* Fonts */
 @font-face {

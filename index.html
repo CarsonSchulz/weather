@@ -17,58 +17,79 @@
 <body>
 <div class="header-main">
     <div class="header-overlay"></div>
-    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" class="header-video" src="videos/cloudyday.mp4" id="headerVideo">
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" class="header-video" src="videos/drizzleday.mp4" id="headerVideo">
         <source id="headerVideoSrc" src="" type="video/mp4">
     </video>
     <div class="header-cont container-custom h-100">
         <div class="d-flex h-100 flex-wrap">
             <div class="row w-100 justify-content-end pt-4">
                 <ul class="nav ml-auto weather-nav-main">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="material-icons">info</i></a>
+                    <li class="nav-item align-items-center">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#aboutModal"><i class="material-icons">info</i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link align-items-center d-flex" href="#" data-toggle="modal" data-target="#locationModal"><i class="material-icons mr-2">my_location</i> <span id="displayLocation">Orlando, FL</span></a>
+                        <a class="nav-link align-items-center d-flex" href="#" data-toggle="modal" data-target="#locationModal"><i class="material-icons mr-2" id="locationIcon">my_location</i> <span id="displayLocation">Orlando, FL</span></a>
                     </li>
                 </ul>
             </div>
-            <div class="w-100 align-self-end text-right weather-text-cont">
-                <i id="weatherIcon" class="wi mr-5"></i><span id="displayTemp">72</span>&deg;F
+            <div class="w-100 align-self-end text-center text-xl-right weather-text-cont">
+                <div class="row w-100 justify-content-end m-0">
+                    <div class="col-12 col-xl-3"><i id="weatherIcon" class="wi wi-day-sunny"></i></div>
+                    <div class="col-12 col-xl-5"><span id="displayTemp">72</span>&deg;F</div>
+                </div>
             </div>
         </div>
     </div>    
 </div>
-<div class="modal fade bd-example-modal-lg" id="locationModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="locationModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Location Settings</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <h1 class="modal-title" id="locationModalTitle">Location Data</h1>
             </div>
             <div class="modal-body">
-                <h2 id="locationStatus"></h2>
-                <span class="text-danger" id="locationError"></span>
-                <div id="locationSuccess">
-                    <p>We used the built-in browser GPS to determine your location. For your protection, this information is <b>never</b> shared or saved. Here are some details:</p>
-                    <ul>
-                        <li><b>Latitude: </b><span id="locationLat"></span></li>
-                        <li><b>Longitude: </b><span id="locationLon"></span></li>
-                        <li><b>City: </b><span id="locationCity"></span></li>
-                        <li><b>State/Country: </b><span id="locationState"></span></li>
-                    </ul>                        
-                </div>
+                <p id="locationStatusText"></p>
+                <span id="locationError" class="text-danger"></span>
+                <ul>
+                    <li><b>Latitude</b>: <span id="locationLat"></span></li>
+                    <li><b>Longitude</b>: <span id="locationLon"></span></li>
+                    <li><b>City</b>: <span id="locationCity"></span></li>
+                    <li><b>State/Country</b>: <span id="locationState"></span></li>
+                </ul>
+                <h2>Manual mode:</h2>
+                <p>If you don’t choose to share your location or you simply want the weather for another location, enter the coordinates below.</p>
+                <form onsubmit="manualWeather()">
+                    <label for="manualLat">Latitude:</label>
+                    <input class="weather-input" type="text" id="manualLat" required>
+                    <label for="manualLon">Longitude:</label>
+                    <input class="weather-input" type="text" id="manualLon" required>
+                    <input class="button mt-3" type="submit">
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="button" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="js/geolocation.js"></script>
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="aboutModalTitle">About</h1>
+            </div>
+            <div class="modal-body">
+                <p>This is a simple weather UI that will display the location conditions in tandem with a nice video in the background. This information is not to be used for up-to-date weather conditions and should never be used to monitor severe weather. This website was designed as part of my portfolio which can be found at <a href="https://carsons.me/">https://carsons.me/</a>. Requests for information or use can be sent to <a href="mailto:admin@carsons.me">admin@carsons.me</a>.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="js/geolocation.js"></script>
 </body>
 </html>
