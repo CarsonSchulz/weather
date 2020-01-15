@@ -28,7 +28,7 @@ $(document).ready(function($) {
 
 
 
-    }, 300);
+    }, 1000);
 
     //  Refresh every 5 mins
     setTimeout(function() { location.reload(); }, 300000);
