@@ -1,7 +1,6 @@
 body, html {
     overflow-x: hidden;
     height: 100%;
-    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 /* Utilities */
 .container-custom {
@@ -13,12 +12,12 @@ body, html {
 }
 .button {
     background: transparent;
-    border: 3px solid #212121;
+    border: 2px solid #212121;
     color: #212121;
     text-transform: uppercase;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
     font-weight: 600;
-    padding: 0.7rem 2rem;
+    padding: 0.5rem 1rem;
     -moz-transition: color 200ms ease-in-out, background-color 200ms ease-in-out;
     -webkit-transition: color 200ms ease-in-out, background-color 200ms ease-in-out;
     transition: color 200ms ease-in-out, background-color 200ms ease-in-out;
@@ -85,10 +84,13 @@ body, html {
 }
 .weather-input {
     background: transparent;
-    border: 3px solid #212121;
+    border: 2px solid #212121;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
-    padding: 0.7rem 2rem;
+    padding: 0.7rem 0.5rem;
     width: 100%;
+}
+.error-icon {
+    font-size: 90px;
 }
 /* Fonts */
 @font-face {

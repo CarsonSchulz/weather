@@ -19,7 +19,7 @@
 <body>
 <div class="header-main">
     <div class="header-overlay"></div>
-    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" class="header-video" src="videos/drizzleday.mp4" id="headerVideo">
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" class="header-video" src="" id="headerVideo">
         <source id="headerVideoSrc" src="" type="video/mp4">
     </video>
     <div class="header-cont container-custom h-100">
@@ -60,13 +60,12 @@
                 </ul>
                 <h2>Manual mode:</h2>
                 <p>If you don’t choose to share your location or you simply want the weather for another location, enter the coordinates below.</p>
-                <form onsubmit="manualWeather()">
-                    <label for="manualLat">Latitude:</label>
-                    <input class="weather-input" type="text" id="manualLat" required>
-                    <label for="manualLon">Longitude:</label>
-                    <input class="weather-input" type="text" id="manualLon" required>
-                    <input class="button mt-3" type="submit">
-                </form>
+                <p class="text-danger" id="manualFormError"></p>
+                <label for="manualLat">Latitude:</label>
+                <input class="weather-input" type="text" id="manualLat" required>
+                <label for="manualLon">Longitude:</label>
+                <input class="weather-input" type="text" id="manualLon" required>
+                <button class="button mt-3" onclick="manualWeather();">Submit</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="button" data-dismiss="modal">Close</button>
@@ -90,15 +89,15 @@
     </div>
 </div>
 <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title text-danger" id="alertTitle">Warning!</h1>
+            <div class="modal-body text-center">
+                <i class="material-icons error-icon text-danger">info</i>
+                <h1 class="text-danger">There was an error.</h1>
+                <p id="errorMessage"></p>
+                <p>The location for this website application will be defaulted to Orlando, Florida.</p>
             </div>
-            <div class="modal-body">
-                <p>It appears your geolocation settings are disabled. For this website to work as it should, we will need your location. For now, the location will be defaulted to Orlando, Florida. To manually set your location, click on the Orlando, FL option in the top right.</p>
-            </div>
-            <div class="modal-footer">
+            <div class="modal-footer justify-content-center">
                 <button type="button" class="button" data-dismiss="modal">Proceed</button>
             </div>
         </div>
@@ -108,5 +107,6 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="js/geolocation.js"></script>
+<script src="js/sandbox.js"></script>
 </body>
 </html>

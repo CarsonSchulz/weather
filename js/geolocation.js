@@ -1,40 +1,31 @@
-$(document).ready(function($) {
-    //  Start by grabbing the GPS location
-    tryGPS(function(lat_lng){
-        document.getElementById('locationLat').innerHTML = lat_lng.lat;
-        document.getElementById('locationLon').innerHTML = lat_lng.lng;
-    });
+getLocation();
 
-    setTimeout(function() {
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(getLocation_success, getLocation_error);
+    } else {
+        printError('Your browser does not support geolocation services.');
+    }
+}
 
-        //  Get lat and lon values
-        var lat = document.getElementById('locationLat').innerHTML;
-        var lon = document.getElementById('locationLon').innerHTML;
+function getLocation_success(position){
+    getWeather(position.coords.latitude, position.coords.longitude)
+}
 
-        //  Uncomment below to set a manual lat/lon
-        // lat = 32.2714;
-        // lon = -90.2225;
+function getLocation_error(error){
+    printError(error.message);
+}
 
-        if(checkCoords(lat, lon)){
-            getWeather(lat, lon);
-            goodLoc();
-            $('#locationModal').modal('hide');
-        } else {
-            getWeather(28.505204, -81.335654);
-            badLoc();
-            printError('There was an issue locating the given coordinates.');
-        }
+function printError(message) {
+    document.getElementById("errorMessage").innerHTML = message;
+    $('#alertModal').modal('toggle');
+    getWeather(28.538160, -81.395743);
+}
 
-    }, 1000);
+function getWeather(lat, lon) {
 
-    //  Refresh every 5 mins
-    setTimeout(function() { location.reload(); }, 300000);
-    
-});
-
-function getWeather(funLat, funLon) {
-
-    var getURL = 'pulldata.php?lat=' + funLat + '&lon=' + funLon;
+    //  Build URL
+    var getURL = 'pulldata.php?lat=' + lat + '&lon=' + lon;
 
     //  Begin the calls
     jQuery.ajax({
@@ -44,78 +35,70 @@ function getWeather(funLat, funLon) {
         dataType: 'json',
     }).done(function(data){
             if(data.status === 1) {
-
+                //  Get JS variables
                 weatherLoc = data.city + ', ' + data.state;
                 weatherTemp = data.temp;
                 weatherCity = data.city;
                 weatherState = data.state;
+                weatherIcon = data.icon;
 
+                //  Display them
                 document.getElementById("displayLocation").innerHTML = weatherLoc;
                 document.getElementById("displayTemp").innerHTML = weatherTemp;
                 document.getElementById("locationCity").innerHTML = weatherCity;
                 document.getElementById("locationState").innerHTML = weatherState;
-                document.getElementById("locationLat").innerHTML = funLat;
-                document.getElementById("locationLon").innerHTML = funLon;
+                document.getElementById("locationLat").innerHTML = lat;
+                document.getElementById("locationLon").innerHTML = lon;
 
-                //  Display icons
-                tod = nightOrDay(data.sunrise, data.sunset);
-                weatherIconClass = weatherIcon(data.icon, tod);
+                //  Icon stuff
+                tod = getTOD(data.sunrise, data.sunset);
+                weatherIconClass = getWeatherIcon(weatherIcon, tod);
 
                 var weatherIconHTML = document.getElementById("weatherIcon");
+                weatherIconHTML.className = 'wi';
                 weatherIconHTML.classList.add(weatherIconClass);
 
-                var backgroundVidSrc = backgroundVid(data.icon, tod);
-                var video = document.getElementById('headerVideo');
-                video.src = 'videos/' + backgroundVidSrc;
-                video.play();                
+                //  Change background video
+                var backgroundVidSrc = getbackgroundVid(weatherIcon, tod);
+                var backgroundVid = document.getElementById('headerVideo');
+                backgroundVid.src = 'videos/' + backgroundVidSrc;
+                backgroundVid.play(); 
             } else {
-                badLoc();
+                printError('There was a backend error or an error retrieving data for your location. Try changing your location or manually entering your coordinates.')
             }
     })
 }
 
-function tryGPS(callback) {
-    
-    if (navigator.geolocation) {
-        var lat_lng = navigator.geolocation.getCurrentPosition(function(position){
-            var user_position = {};
-            user_position.lat = position.coords.latitude; 
-            user_position.lng = position.coords.longitude; 
-            callback(user_position);
-        }, gpsBad);
-    } else {
-        console.log('shit');
-        printError('Browser cannot support GPS location.');
-        badLoc();
+function manualWeather() {
+
+    //  Get the entered coords
+    var givenLat = parseFloat(document.getElementById("manualLat").value);
+    var givenLon = parseFloat(document.getElementById("manualLon").value);
+
+    //  Check the given coords
+    if(checkCoords(givenLat, givenLon)){
+        getWeather(givenLat, givenLon);
+        $('#locationModal').modal('hide');
     }
-}
-function printLatLon(position) {
 
+    document.getElementById("manualLat").value = '';
+    document.getElementById("manualLon").value = '';
+}
 
-    document.getElementById('locationLat').innerHTML = position.coords.latitude;
-    document.getElementById('locationLon').innerHTML = position.coords.longitude;
+function manualWeather_error(message) {
+    document.getElementById('manualFormError').innerHTML = message;
+}
 
-    return position.coords.latitude + ',' + position.coords.longitude;
-}
-function gpsBad(error) {
-    printError(error.message);
-    $('#alertModal').modal('show');
-}
-function printError(message) {
-    document.getElementById('locationError').innerHTML += message + '<br>';
-    badLoc();
-}
-function clearErrors() {
-    document.getElementById('locationError').innerHTML = '';
-}
 function checkCoords(lat, lon) {
     
+    //  Make sure the entered values are floats
     lat = parseFloat(lat);
     lon = parseFloat(lon);
     
     error = false;
     errmsg = '';
 
+    //  While no error
     while(!error) {
         
         // Lets make sure they are good to start
@@ -139,16 +122,14 @@ function checkCoords(lat, lon) {
     }
 
     if(errmsg !== '') {
-        printError(errmsg);
+        manualWeather_error(errmsg);
         return false;
     } else {
         return true;
     }
-    
-
-
 }
-function nightOrDay(sunrise, sunset) {
+
+function getTOD(sunrise, sunset) {
     var currentTime = new Date();
     sunrise = new Date(sunrise);
     sunset = new Date(sunset);
@@ -158,12 +139,13 @@ function nightOrDay(sunrise, sunset) {
         return 'night';
     }
 }
-function weatherIcon(code, tod) {
+
+function getWeatherIcon(code, tod) {
     var iconClass = 'wi-owm-' + tod + '-' + code; 
     return iconClass;
 }
-function backgroundVid(code, tod) {
 
+function getbackgroundVid(code, tod) {
     //  Thunderstorm
     if(code >= 200 && code <= 299) {
         if(tod === 'day') {
@@ -247,60 +229,5 @@ function backgroundVid(code, tod) {
     }
     else {
         return "poop";
-    }
-}
-function goodLoc() {
-    //  Change location icon to green
-    var locationIcon, goodStyle, classArray;
-    locationIcon = document.getElementById("locationIcon");
-    goodStyle = "text-success";
-    badStyle = "text-danger";
-    classArray = locationIcon.className.split(" ");
-    if (classArray.indexOf(badStyle) !== -1) {
-        locationIcon.className = "material-icons mr-2";
-    }
-
-    if (classArray.indexOf(goodStyle) == -1) {
-        locationIcon.className += " " + goodStyle;
-    }
-
-
-    //  Print success text
-    var goodText = 'Gotcha! We have found your location by using your browser’s geolocation. It is important to note that your location and any other data is not stored on our website. Here are some details we could find:';
-    document.getElementById("locationStatusText").innerHTML = goodText;
-    clearErrors();
-}
-function badLoc() {
-    //  Change location icon to red
-    var locationIcon, badStyle, classArray;
-    locationIcon = document.getElementById("locationIcon");
-    goodStyle = "text-success";
-    badStyle = "text-danger";
-    classArray = locationIcon.className.split(" ");
-    if (classArray.indexOf(goodStyle) !== -1) {
-        locationIcon.className = "material-icons mr-2";
-    }
-
-    if (classArray.indexOf(badStyle) == -1) {
-        locationIcon.className += " " + badStyle;
-    }
-
-    //  Print success text
-    var badText = 'Oh no! We could not get your location and have defaulted back to the station home of Orlando, FL. To ensure that we can get your location, please allow the website to have your location and refresh. We never store any of the information that we are given, and your information will only be available locally.';
-    document.getElementById("locationStatusText").innerHTML = badText;
-}
-function manualWeather() {
-    var givenLat = parseFloat(document.getElementById("manualLat").value);
-    var givenLon = parseFloat(document.getElementById("manualLon").value);
-
-    if(checkCoords(givenLat, givenLon)){
-        getWeather(givenLat, givenLon);
-        goodLoc();
-        $('#locationModal').modal('hide');
-    } else {
-        printError('There was an issue locating the given coordinates.');
-        badLoc();
-        document.getElementById("manualLat").value = '';
-        document.getElementById("manualLon").value = '';
     }
 }
